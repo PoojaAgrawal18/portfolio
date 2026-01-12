@@ -38,6 +38,7 @@ import {
 import githubImg from "./assets/contribution.png";
 import githubImg1 from "./assets/contribution1.png";
 import linkedinImg from "./assets/linkdin.png";
+import SkillsSection from "./skill";
 
 const theme = createTheme({
   palette: {
@@ -297,7 +298,11 @@ function DynamicProjectCard({ project, index, visible }) {
           transform: `
             rotateX(${rotation3D.x}deg) 
             rotateY(${rotation3D.y}deg) 
-            ${isHovered ? "scale(1.05) translateZ(30px)" : "scale(1) translateZ(0px)"}
+            ${
+              isHovered
+                ? "scale(1.05) translateZ(30px)"
+                : "scale(1) translateZ(0px)"
+            }
           `,
           transition: "transform 0.2s ease-out",
         }}
@@ -382,7 +387,9 @@ function DynamicProjectCard({ project, index, visible }) {
               position: "relative",
               overflow: "hidden",
               transform: isHovered
-                ? `translate(${(mousePos.x - 50) / 10}px, ${(mousePos.y - 50) / 10}px)`
+                ? `translate(${(mousePos.x - 50) / 10}px, ${
+                    (mousePos.y - 50) / 10
+                  }px)`
                 : "translate(0, 0)",
               transition: "transform 0.2s ease-out",
             }}
@@ -431,7 +438,9 @@ function DynamicProjectCard({ project, index, visible }) {
                     borderRadius: "50%",
                     background: "white",
                     boxShadow: `0 0 15px ${project.color}`,
-                    animation: `orbit${i % 4} ${2 + (i % 3) * 0.5}s linear infinite`,
+                    animation: `orbit${i % 4} ${
+                      2 + (i % 3) * 0.5
+                    }s linear infinite`,
                     animationDelay: `${i * 0.2}s`,
                     "@keyframes orbit0": {
                       "0%": { transform: "rotate(0deg) translateX(70px)" },
@@ -469,10 +478,12 @@ function DynamicProjectCard({ project, index, visible }) {
                 animation: isHovered ? "wave 3s ease-in-out infinite" : "none",
                 "@keyframes wave": {
                   "0%, 100%": {
-                    clipPath: "polygon(0 60%, 25% 50%, 50% 60%, 75% 50%, 100% 60%, 100% 100%, 0 100%)",
+                    clipPath:
+                      "polygon(0 60%, 25% 50%, 50% 60%, 75% 50%, 100% 60%, 100% 100%, 0 100%)",
                   },
                   "50%": {
-                    clipPath: "polygon(0 50%, 25% 60%, 50% 50%, 75% 60%, 100% 50%, 100% 100%, 0 100%)",
+                    clipPath:
+                      "polygon(0 50%, 25% 60%, 50% 50%, 75% 60%, 100% 50%, 100% 100%, 0 100%)",
                   },
                 },
               }}
@@ -534,9 +545,13 @@ function DynamicProjectCard({ project, index, visible }) {
                     color: project.color,
                     border: `1px solid ${project.color}50`,
                     transform: isHovered
-                      ? `translateY(-5px) rotate(${i % 2 === 0 ? 3 : -3}deg) scale(1.1)`
+                      ? `translateY(-5px) rotate(${
+                          i % 2 === 0 ? 3 : -3
+                        }deg) scale(1.1)`
                       : "translateY(0) rotate(0deg) scale(1)",
-                    transition: `all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) ${i * 0.1}s`,
+                    transition: `all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) ${
+                      i * 0.1
+                    }s`,
                   }}
                 />
               ))}
@@ -547,7 +562,9 @@ function DynamicProjectCard({ project, index, visible }) {
               sx={{
                 mt: 2,
                 opacity: isHovered ? 1 : 0,
-                transform: isHovered ? "scale(1) translateY(0)" : "scale(0.8) translateY(10px)",
+                transform: isHovered
+                  ? "scale(1) translateY(0)"
+                  : "scale(0.8) translateY(10px)",
                 transition: "all 0.4s ease",
               }}
             >
@@ -557,7 +574,9 @@ function DynamicProjectCard({ project, index, visible }) {
                 endIcon={<RocketLaunch />}
                 sx={{
                   background: project.gradient,
-                  transform: `translate(${(mousePos.x - 50) / 25}px, ${(mousePos.y - 50) / 25}px)`,
+                  transform: `translate(${(mousePos.x - 50) / 25}px, ${
+                    (mousePos.y - 50) / 25
+                  }px)`,
                   transition: "transform 0.1s ease-out",
                   fontWeight: 700,
                   boxShadow: `0 10px 30px ${project.color}70`,
@@ -588,7 +607,9 @@ function DynamicProjectCard({ project, index, visible }) {
                 borderRadius: "50%",
                 background: project.color,
                 boxShadow: `0 0 ${isHovered ? 25 : 12}px ${project.color}`,
-                animation: isHovered ? `pulse ${1 + i * 0.3}s ease-in-out infinite` : "none",
+                animation: isHovered
+                  ? `pulse ${1 + i * 0.3}s ease-in-out infinite`
+                  : "none",
                 zIndex: 3,
                 "@keyframes pulse": {
                   "0%, 100%": { transform: "scale(1)", opacity: 1 },
@@ -875,120 +896,8 @@ export default function Portfolio() {
       </Box>
 
       {/* Skills Section */}
-      <Box
-        id="skills"
-        sx={{
-          py: { xs: 6, md: 10 },
-          px: { xs: 2, sm: 3, md: 4 },
-          background: "rgba(99, 102, 241, 0.02)",
-        }}
-      >
-        <Container maxWidth="xxl">
-          <Typography
-            variant="h2"
-            textAlign="center"
-            sx={{
-              mb: { xs: 4, md: 6 },
-              background: "linear-gradient(135deg, #6366f1, #ec4899)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
-            Skills & Expertise
-          </Typography>
+      <SkillsSection />
 
-          <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: { xs: 3, md: 4 },
-            }}
-          >
-            {skills.map((skillGroup, index) => (
-              <Box
-                key={index}
-                sx={{
-                  flex: {
-                    xs: "1 1 100%",
-                    md: "1 1 calc(33.333% - 21.333px)",
-                  },
-                  minWidth: 0,
-                }}
-              >
-                <Slide in={visible} direction="up" timeout={500 + index * 200}>
-                  <Paper
-                    elevation={0}
-                    sx={{
-                      p: { xs: 3, md: 4 },
-                      height: "100%",
-                      border: "1px solid rgba(255, 255, 255, 0.1)",
-                      "&:hover": {
-                        borderColor: "#6366f1",
-                        boxShadow: "0 10px 30px rgba(99, 102, 241, 0.2)",
-                      },
-                    }}
-                  >
-                    <Typography
-                      variant="h5"
-                      sx={{
-                        mb: 3,
-                        color: "#6366f1",
-                        fontWeight: 600,
-                        fontSize: { xs: "1.25rem", md: "1.5rem" },
-                      }}
-                    >
-                      {skillGroup.category}
-                    </Typography>
-                    {skillGroup.items.map((skill, i) => (
-                      <Box key={i} sx={{ mb: 3 }}>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            mb: 1,
-                          }}
-                        >
-                          <Typography
-                            variant="body2"
-                            sx={{
-                              fontSize: { xs: "0.875rem", md: "0.875rem" },
-                            }}
-                          >
-                            {skill.name}
-                          </Typography>
-                          <Typography
-                            variant="body2"
-                            color="primary"
-                            sx={{
-                              fontSize: { xs: "0.875rem", md: "0.875rem" },
-                            }}
-                          >
-                            {skill.level}%
-                          </Typography>
-                        </Box>
-                        <LinearProgress
-                          variant="determinate"
-                          value={skill.level}
-                          sx={{
-                            height: { xs: 6, md: 8 },
-                            borderRadius: 4,
-                            background: "rgba(255, 255, 255, 0.1)",
-                            "& .MuiLinearProgress-bar": {
-                              background:
-                                "linear-gradient(90deg, #6366f1, #ec4899)",
-                              borderRadius: 4,
-                            },
-                          }}
-                        />
-                      </Box>
-                    ))}
-                  </Paper>
-                </Slide>
-              </Box>
-            ))}
-          </Box>
-        </Container>
-      </Box>
 
       {/* Contact Section */}
       <Box
@@ -1027,11 +936,15 @@ export default function Portfolio() {
                 i % 2 === 0 ? "rgba(99,102,241,0.4)" : "rgba(236,72,153,0.4)",
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
-              animation: `float ${Math.random() * 10 + 10}s ease-in-out infinite`,
+              animation: `float ${
+                Math.random() * 10 + 10
+              }s ease-in-out infinite`,
               animationDelay: `${Math.random() * 5}s`,
               "@keyframes float": {
                 "0%, 100%": { transform: "translateY(0px)" },
-                "50%": { transform: `translateY(${Math.random() * 50 - 25}px)` },
+                "50%": {
+                  transform: `translateY(${Math.random() * 50 - 25}px)`,
+                },
               },
             }}
           />
@@ -1082,7 +995,9 @@ export default function Portfolio() {
                     Contact Information
                   </Typography>
 
-                  <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+                  <Box
+                    sx={{ display: "flex", flexDirection: "column", gap: 3 }}
+                  >
                     <a
                       href="https://mail.google.com/mail/?view=cm&to=agrawalpuja444@gmail.com"
                       target="_blank"
@@ -1114,13 +1029,17 @@ export default function Portfolio() {
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
-                            background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
+                            background:
+                              "linear-gradient(135deg, #6366f1, #8b5cf6)",
                           }}
                         >
                           <Email sx={{ color: "white" }} />
                         </Box>
                         <Box>
-                          <Typography variant="subtitle2" color="text.secondary">
+                          <Typography
+                            variant="subtitle2"
+                            color="text.secondary"
+                          >
                             Email
                           </Typography>
                           <Typography
@@ -1158,7 +1077,8 @@ export default function Portfolio() {
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
-                          background: "linear-gradient(135deg, #3b82f6, #60a5fa)",
+                          background:
+                            "linear-gradient(135deg, #3b82f6, #60a5fa)",
                         }}
                       >
                         <Language sx={{ color: "white" }} />
@@ -1190,21 +1110,29 @@ export default function Portfolio() {
                         Connect With Me
                       </Typography>
 
-                      <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: 2,
+                        }}
+                      >
                         {[
                           {
                             icon: <GitHub sx={{ fontSize: 32 }} />,
                             label: "GitHub",
                             value: "github.com/PoojaAgrawal18",
                             link: "https://github.com/PoojaAgrawal18",
-                            gradient: "linear-gradient(135deg, #333333, #4a5568)",
+                            gradient:
+                              "linear-gradient(135deg, #333333, #4a5568)",
                           },
                           {
                             icon: <LinkedIn sx={{ fontSize: 32 }} />,
                             label: "LinkedIn",
                             value: "linkedin.com/in/pooja-agrawal",
                             link: "https://www.linkedin.com/in/pooja-agrawal-a6245126a/",
-                            gradient: "linear-gradient(135deg, #0077b5, #00a0dc)",
+                            gradient:
+                              "linear-gradient(135deg, #0077b5, #00a0dc)",
                           },
                         ].map((contact, index) => (
                           <Box key={index}>
@@ -1228,10 +1156,12 @@ export default function Portfolio() {
                                       : "rgba(30, 41, 59, 0.5)",
                                   backdropFilter: "blur(10px)",
                                   border: "1px solid rgba(255, 255, 255, 0.1)",
-                                  transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+                                  transition:
+                                    "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
                                   "&:hover": {
                                     transform: "translateX(8px)",
-                                    boxShadow: "0 10px 30px rgba(99,102,241,0.3)",
+                                    boxShadow:
+                                      "0 10px 30px rgba(99,102,241,0.3)",
                                   },
                                 }}
                               >
@@ -1248,7 +1178,9 @@ export default function Portfolio() {
                                         ? "rgba(255,255,255,0.2)"
                                         : "rgba(99,102,241,0.1)",
                                     color:
-                                      hoveredContact === index ? "white" : "#6366f1",
+                                      hoveredContact === index
+                                        ? "white"
+                                        : "#6366f1",
                                     transition: "all 0.3s ease",
                                   }}
                                 >
@@ -1282,7 +1214,9 @@ export default function Portfolio() {
                                 <IconButton
                                   sx={{
                                     color:
-                                      hoveredContact === index ? "white" : "#6366f1",
+                                      hoveredContact === index
+                                        ? "white"
+                                        : "#6366f1",
                                   }}
                                 >
                                   <ArrowForward />
