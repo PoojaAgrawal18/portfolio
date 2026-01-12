@@ -352,7 +352,7 @@ export default function Portfolio() {
             <Box
               sx={{
                 flex: { xs: "1", md: "0 0 41.666667%" },
-                mt: { xs: 0, md: -37 },
+                mt: { xs: 0, md: -17 },
               }}
             >
               <Zoom in={visible} timeout={1200}>
@@ -716,45 +716,56 @@ export default function Portfolio() {
                     sx={{ display: "flex", flexDirection: "column", gap: 3 }}
                   >
                     {/* Email */}
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 2,
-                        p: 2,
-                        borderRadius: 2,
-                        background: "rgba(99, 102, 241, 0.1)",
-                        border: "1px solid rgba(99, 102, 241, 0.2)",
-                        transition: "all 0.3s ease",
-                        "&:hover": {
-                          background: "rgba(99, 102, 241, 0.2)",
-                          transform: "translateX(8px)",
-                        },
-                      }}
+                    <a
+                      href="https://mail.google.com/mail/?view=cm&to=agrawalpuja444@gmail.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ textDecoration: "none" }}
                     >
                       <Box
                         sx={{
-                          width: 50,
-                          height: 50,
-                          borderRadius: 2,
                           display: "flex",
                           alignItems: "center",
-                          justifyContent: "center",
-                          background:
-                            "linear-gradient(135deg, #6366f1, #8b5cf6)",
+                          gap: 2,
+                          p: 2,
+                          borderRadius: 2,
+                          background: "rgba(99, 102, 241, 0.1)",
+                          border: "1px solid rgba(99, 102, 241, 0.2)",
+                          transition: "all 0.3s ease",
+                          cursor: "pointer",
+                          "&:hover": {
+                            background: "rgba(99, 102, 241, 0.2)",
+                            transform: "translateX(8px)",
+                          },
                         }}
                       >
-                        <Email sx={{ color: "white" }} />
+                        <Box
+                          sx={{
+                            width: 50,
+                            height: 50,
+                            borderRadius: 2,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            background:
+                              "linear-gradient(135deg, #6366f1, #8b5cf6)",
+                          }}
+                        >
+                          <Email sx={{ color: "white" }} />
+                        </Box>
+                        <Box>
+                          <Typography
+                            variant="subtitle2"
+                            color="text.secondary"
+                          >
+                            Email
+                          </Typography>
+                          <Typography variant="body1" color="text.secondary" sx={{ fontWeight: 500 }}>
+                            agrawalpuja444@gmail.com
+                          </Typography>
+                        </Box>
                       </Box>
-                      <Box>
-                        <Typography variant="subtitle2" color="text.secondary">
-                          Email
-                        </Typography>
-                        <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                          agrawalpuja444@gmail.com
-                        </Typography>
-                      </Box>
-                    </Box>
+                    </a>
 
                     {/* Location */}
                     <Box
