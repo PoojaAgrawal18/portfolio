@@ -32,6 +32,9 @@ import {
   Email,
   ArrowForward,
 } from "@mui/icons-material";
+import githubImg from "./assets/contribution.png";
+import githubImg1 from "./assets/contribution1.png";
+import linkedinImg from "./assets/linkdin.png";
 
 const theme = createTheme({
   palette: {
@@ -187,7 +190,6 @@ export default function Portfolio() {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
-  
 
   return (
     <ThemeProvider theme={theme}>
@@ -272,7 +274,12 @@ export default function Portfolio() {
             }}
           >
             {/* LEFT SIDE – TEXT */}
-            <Box sx={{ flex: { xs: "1", md: "0 0 58.333333%" }, mt: { xs: 0, md: -12 } }}>
+            <Box
+              sx={{
+                flex: { xs: "1", md: "0 0 58.333333%" },
+                mt: { xs: 0, md: -12 },
+              }}
+            >
               <Fade in={visible} timeout={1000}>
                 <Box>
                   <Typography
@@ -342,7 +349,12 @@ export default function Portfolio() {
             </Box>
 
             {/* RIGHT SIDE – PROFILE IMAGE */}
-            <Box sx={{ flex: { xs: "1", md: "0 0 41.666667%" }, mt: { xs: 0, md: -37 } }}>
+            <Box
+              sx={{
+                flex: { xs: "1", md: "0 0 41.666667%" },
+                mt: { xs: 0, md: -37 },
+              }}
+            >
               <Zoom in={visible} timeout={1200}>
                 <Box
                   sx={{
@@ -676,7 +688,7 @@ export default function Portfolio() {
             sx={{
               display: "flex",
               flexDirection: { xs: "column", md: "row" },
-              gap: 0,
+              gap: 4,
             }}
           >
             {/* Contact Information */}
@@ -818,7 +830,7 @@ export default function Portfolio() {
                                   icon: <GitHub sx={{ fontSize: 32 }} />,
                                   label: "GitHub",
                                   value: "github.com/yourusername",
-                                  link: "https://github.com/yourusername",
+                                  link: "https://github.com/PoojaAgrawal18",
                                   gradient:
                                     "linear-gradient(135deg, #333333, #4a5568)",
                                 },
@@ -826,7 +838,7 @@ export default function Portfolio() {
                                   icon: <LinkedIn sx={{ fontSize: 32 }} />,
                                   label: "LinkedIn",
                                   value: "linkedin.com/in/yourusername",
-                                  link: "https://linkedin.com/in/yourusername",
+                                  link: "https://www.linkedin.com/in/pooja-agrawal-a6245126a/",
                                   gradient:
                                     "linear-gradient(135deg, #0077b5, #00a0dc)",
                                 },
@@ -954,6 +966,73 @@ export default function Portfolio() {
                   </Box>
                 </Paper>
               </Slide>
+            </Box>
+            <Box
+              sx={{
+                flex: { xs: "1", md: "0 0 50%" },
+                display: { xs: "none", md: "flex" },
+                justifyContent: "center",
+                alignItems: "center",
+                position: "relative",
+                gap: 2, // optional, space between multiple images
+              }}
+            >
+              {hoveredContact !== null && (
+                <Zoom in={hoveredContact !== null} timeout={400}>
+                  <Box sx={{ display: "flex", gap: 2 }}>
+                    {hoveredContact === 0 ? (
+                      <>
+                        {/* GitHub hover images */}
+                        <Box
+                          sx={{
+                            display: "flex",
+                            gap: 6, // space between images
+                            flexWrap: "wrap", // wrap if screen is small
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Box
+                            component="img"
+                            src={githubImg1} // first image
+                            alt="GitHub Visual 1"
+                            sx={{
+                              width: { xs: 200, md: 600 }, // responsive width
+                              borderRadius: 4,
+                              boxShadow: "0 20px 50px rgba(99,102,241,0.4)",
+                              transition: "all 0.3s ease",
+                            }}
+                          />
+                          <Box
+                            component="img"
+                            src={githubImg} // second image
+                            alt="GitHub Visual 2"
+                            sx={{
+                              width: { xs: 200, md: 600 }, // match first image
+                              borderRadius: 4,
+                              boxShadow: "0 20px 50px rgba(99,102,241,0.4)",
+                              transition: "all 0.3s ease",
+                            }}
+                          />
+                        </Box>
+                      </>
+                    ) : (
+                      // LinkedIn hover image
+                      <Box
+                        component="img"
+                        src={linkedinImg}
+                        alt="LinkedIn Visual"
+                        sx={{
+                          maxWidth: 600,
+                          borderRadius: 4,
+                          boxShadow: "0 20px 50px rgba(99,102,241,0.4)",
+                          transition: "all 0.3s ease",
+                        }}
+                      />
+                    )}
+                  </Box>
+                </Zoom>
+              )}
             </Box>
           </Box>
         </Container>
