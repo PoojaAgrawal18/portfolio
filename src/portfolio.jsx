@@ -19,6 +19,7 @@ import {
   Paper,
   Avatar,
   IconButton,
+  Switch,
 } from "@mui/material";
 import {
   Code,
@@ -34,67 +35,14 @@ import {
   Visibility,
   Star,
   RocketLaunch,
+  DarkMode,
+  LightMode,
 } from "@mui/icons-material";
 import githubImg from "./assets/contribution.png";
 import githubImg1 from "./assets/contribution1.png";
 import linkedinImg from "./assets/linkdin.png";
 import SkillsSection from "./skill";
 import ProfilePic from "./assets/pic.jpeg";
-
-const theme = createTheme({
-  palette: {
-    mode: "dark",
-    primary: {
-      main: "#6366f1",
-    },
-    secondary: {
-      main: "#ec4899",
-    },
-    background: {
-      default: "#0f172a",
-      paper: "#1e293b",
-    },
-  },
-  typography: {
-    fontFamily: '"Inter", "Segoe UI", "Roboto", sans-serif',
-    h1: {
-      fontWeight: 700,
-      fontSize: "clamp(2.5rem, 6vw, 3.5rem)",
-    },
-    h2: {
-      fontWeight: 700,
-      fontSize: "clamp(2rem, 5vw, 2.5rem)",
-    },
-    h5: {
-      fontSize: "clamp(1.2rem, 3vw, 1.5rem)",
-    },
-    h6: {
-      fontSize: "clamp(1rem, 2.5vw, 1.25rem)",
-    },
-  },
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          borderRadius: 25,
-          textTransform: "none",
-          fontWeight: 600,
-          padding: "10px 30px",
-        },
-      },
-    },
-  },
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 900,
-      lg: 1200,
-      xl: 1536,
-      xxl: 1920,
-    },
-  },
-});
 
 const projects = [
   {
@@ -200,7 +148,7 @@ const getMasonryLayout = (index) => {
 };
 
 // Ultra Dynamic Project Card with crazy animations
-function DynamicProjectCard({ project, index, visible, projectsVisible }) {
+function DynamicProjectCard({ project, index, visible, projectsVisible, mode }) {
   const [isHovered, setIsHovered] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
   const [rotation3D, setRotation3D] = useState({ x: 0, y: 0 });
@@ -309,10 +257,10 @@ function DynamicProjectCard({ project, index, visible, projectsVisible }) {
             display: "flex",
             flexDirection: "column",
             border: "2px solid",
-            borderColor: isHovered ? project.color : "rgba(255, 255, 255, 0.1)",
+            borderColor: isHovered ? project.color : mode === 'dark' ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
             position: "relative",
             overflow: "hidden",
-            background: "#1e293b",
+            background: mode === 'dark' ? "#1e293b" : "#ffffff",
             boxShadow: isHovered
               ? `0 35px 90px ${project.color}70, 0 0 60px ${project.color}40`
               : "0 4px 6px rgba(0,0,0,0.1)",
@@ -502,7 +450,7 @@ function DynamicProjectCard({ project, index, visible, projectsVisible }) {
                 fontWeight: 600,
                 fontSize: isLarge ? "1.75rem" : "1.25rem",
                 background: isHovered
-                  ? `linear-gradient(90deg, ${project.color}, #fff)`
+                  ? `linear-gradient(90deg, ${project.color}, ${mode === 'dark' ? '#fff' : '#000'})`
                   : "none",
                 WebkitBackgroundClip: isHovered ? "text" : "none",
                 WebkitTextFillColor: isHovered ? "transparent" : "inherit",
@@ -620,10 +568,66 @@ function DynamicProjectCard({ project, index, visible, projectsVisible }) {
 }
 
 export default function Portfolio() {
+  const [mode, setMode] = useState("dark");
   const [visible, setVisible] = useState(true);
   const [hoveredContact, setHoveredContact] = useState(null);
   const [projectsVisible, setProjectsVisible] = useState(false);
   const projectsRef = useRef(null);
+
+  const theme = createTheme({
+    palette: {
+      mode: mode,
+      primary: {
+        main: "#6366f1",
+      },
+      secondary: {
+        main: "#ec4899",
+      },
+      background: {
+        default: mode === "dark" ? "#0f172a" : "#f8fafc",
+        paper: mode === "dark" ? "#1e293b" : "#ffffff",
+      },
+    },
+    typography: {
+      fontFamily: '"Inter", "Segoe UI", "Roboto", sans-serif',
+      h1: {
+        fontWeight: 700,
+        fontSize: "clamp(2.5rem, 6vw, 3.5rem)",
+      },
+      h2: {
+        fontWeight: 700,
+        fontSize: "clamp(2rem, 5vw, 2.5rem)",
+      },
+      h5: {
+        fontSize: "clamp(1.2rem, 3vw, 1.5rem)",
+      },
+      h6: {
+        fontSize: "clamp(1rem, 2.5vw, 1.25rem)",
+      },
+    },
+    components: {
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            borderRadius: 25,
+            textTransform: "none",
+            fontWeight: 600,
+            padding: "10px 30px",
+          },
+        },
+      },
+    },
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 600,
+        md: 900,
+        lg: 1200,
+        xl: 1536,
+        xxl: 1920,
+      },
+    },
+  });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -656,6 +660,10 @@ export default function Portfolio() {
     }
   };
 
+  const toggleTheme = () => {
+    setMode((prevMode) => (prevMode === "dark" ? "light" : "dark"));
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -665,9 +673,9 @@ export default function Portfolio() {
         position="fixed"
         elevation={0}
         sx={{
-          background: "rgba(15, 23, 42, 0.8)",
+          background: mode === "dark" ? "rgba(15, 23, 42, 0.8)" : "rgba(248, 250, 252, 0.8)",
           backdropFilter: "blur(10px)",
-          borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+          borderBottom: mode === "dark" ? "1px solid rgba(255, 255, 255, 0.1)" : "1px solid rgba(0, 0, 0, 0.1)",
         }}
       >
         <Toolbar sx={{ px: { xs: 2, sm: 3, md: 4, lg: 6 } }}>
@@ -683,6 +691,10 @@ export default function Portfolio() {
           >
             Portfolio
           </Typography>
+          
+          {/* Theme Toggle Switch */}
+         
+
           <Box sx={{ display: { xs: "none", md: "flex" }, gap: 1 }}>
             <Button color="inherit" onClick={() => scrollToSection("home")}>
               Home
@@ -690,12 +702,25 @@ export default function Portfolio() {
             <Button color="inherit" onClick={() => scrollToSection("projects")}>
               Projects
             </Button>
-            <Button color="inherit" onClick={() => scrollToSection("skills")}>
-              Skills
-            </Button>
             <Button color="inherit" onClick={() => scrollToSection("contact")}>
               Contact
             </Button>
+          </Box>
+           <Box sx={{ display: "flex", alignItems: "center", gap: 1, mr: 0 }}>
+            <LightMode sx={{ color: mode === "light" ? "#6366f1" : "gray" }} />
+            <Switch
+              checked={mode === "dark"}
+              onChange={toggleTheme}
+              sx={{
+                "& .MuiSwitch-switchBase.Mui-checked": {
+                  color: "#6366f1",
+                },
+                "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+                  backgroundColor: "#6366f1",
+                },
+              }}
+            />
+            {/* <DarkMode sx={{ color: mode === "dark" ? "#6366f1" : "gray" }} /> */}
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" }, gap: 0.5 }}>
             <Button
@@ -723,8 +748,9 @@ export default function Portfolio() {
           minHeight: "100vh",
           display: "flex",
           alignItems: "center",
-          background:
-            "radial-gradient(circle at 20% 50%, rgba(99,102,241,0.15), transparent 50%), radial-gradient(circle at 80% 50%, rgba(236,72,153,0.15), transparent 50%)",
+          background: mode === "dark"
+            ? "radial-gradient(circle at 20% 50%, rgba(99,102,241,0.15), transparent 50%), radial-gradient(circle at 80% 50%, rgba(236,72,153,0.15), transparent 50%)"
+            : "radial-gradient(circle at 20% 50%, rgba(99,102,241,0.08), transparent 50%), radial-gradient(circle at 80% 50%, rgba(236,72,153,0.08), transparent 50%)",
           px: { xs: 2, sm: 3, md: 6 },
           pt: { xs: 10, md: 12 },
         }}
@@ -752,7 +778,9 @@ export default function Portfolio() {
                       fontWeight: 900,
                       mb: 4,
                       background:
-                        "linear-gradient(90deg, #ffffff, #6366f1, #ec4899, #ffffff)",
+                        mode === "dark"
+                          ? "linear-gradient(90deg, #ffffff, #6366f1, #ec4899, #ffffff)"
+                          : "linear-gradient(90deg, #0f172a, #6366f1, #ec4899, #0f172a)",
                       backgroundSize: "300% 300%",
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
@@ -827,7 +855,7 @@ export default function Portfolio() {
                   }}
                 >
                   <Avatar
-                    src={ProfilePic} 
+                    src={ProfilePic}
                     alt="Pooja Agrawal"
                     sx={{
                       width: { xs: 280, md: 380 },
@@ -846,7 +874,6 @@ export default function Portfolio() {
             sx={{
               py: { xs: 8, md: 12 },
               px: { xs: 2, sm: 3, md: 6 },
-              // background: "linear-gradient(180deg, #0f172a 0%, #1e293b 100%)",
               position: "relative",
               overflow: "hidden",
             }}
@@ -885,8 +912,6 @@ export default function Portfolio() {
         </Container>
       </Box>
 
-      {/* Dedicated Skills Section */}
-
       {/* Masonry Grid Projects Section */}
       <Box
         id="projects"
@@ -896,7 +921,7 @@ export default function Portfolio() {
           px: { xs: 2, sm: 3, md: 4 },
           position: "relative",
           overflow: "hidden",
-          background: "#0f172a",
+          background: mode === "dark" ? "#0f172a" : "#f1f5f9",
         }}
       >
         {/* Animated Background */}
@@ -905,7 +930,9 @@ export default function Portfolio() {
             position: "absolute",
             inset: 0,
             background:
-              "radial-gradient(circle at 30% 20%, rgba(99,102,241,0.15), transparent 50%), radial-gradient(circle at 70% 80%, rgba(236,72,153,0.15), transparent 50%)",
+              mode === "dark"
+                ? "radial-gradient(circle at 30% 20%, rgba(99,102,241,0.15), transparent 50%), radial-gradient(circle at 70% 80%, rgba(236,72,153,0.15), transparent 50%)"
+                : "radial-gradient(circle at 30% 20%, rgba(99,102,241,0.08), transparent 50%), radial-gradient(circle at 70% 80%, rgba(236,72,153,0.08), transparent 50%)",
             animation: "breathe 8s ease-in-out infinite",
             "@keyframes breathe": {
               "0%, 100%": { transform: "scale(1)" },
@@ -956,6 +983,7 @@ export default function Portfolio() {
                 index={index}
                 visible={visible}
                 projectsVisible={projectsVisible}
+                mode={mode}
               />
             ))}
           </Box>
@@ -970,7 +998,7 @@ export default function Portfolio() {
           px: { xs: 2, sm: 3, md: 4 },
           position: "relative",
           overflow: "hidden",
-          background: "#0a0f1e",
+          background: mode === "dark" ? "#0a0f1e" : "#e2e8f0",
         }}
       >
         <Box
@@ -978,7 +1006,9 @@ export default function Portfolio() {
             position: "absolute",
             inset: 0,
             background:
-              "radial-gradient(circle at 20% 30%, rgba(99,102,241,0.2), transparent 40%), radial-gradient(circle at 80% 70%, rgba(236,72,153,0.2), transparent 40%)",
+              mode === "dark"
+                ? "radial-gradient(circle at 20% 30%, rgba(99,102,241,0.2), transparent 40%), radial-gradient(circle at 80% 70%, rgba(236,72,153,0.2), transparent 40%)"
+                : "radial-gradient(circle at 20% 30%, rgba(99,102,241,0.1), transparent 40%), radial-gradient(circle at 80% 70%, rgba(236,72,153,0.1), transparent 40%)",
             animation: "pulse 8s ease-in-out infinite",
             "@keyframes pulse": {
               "0%, 100%": { opacity: 0.5 },
@@ -1045,15 +1075,15 @@ export default function Portfolio() {
                   sx={{
                     p: 4,
                     borderRadius: 3,
-                    background: "rgba(30, 41, 59, 0.5)",
+                    background: mode === "dark" ? "rgba(30, 41, 59, 0.5)" : "rgba(255, 255, 255, 0.8)",
                     backdropFilter: "blur(10px)",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
+                    border: mode === "dark" ? "1px solid rgba(255, 255, 255, 0.1)" : "1px solid rgba(0, 0, 0, 0.1)",
                     height: "100%",
                   }}
                 >
                   <Typography
                     variant="h5"
-                    sx={{ mb: 3, fontWeight: 600, color: "white" }}
+                    sx={{ mb: 3, fontWeight: 600 }}
                   >
                     Contact Information
                   </Typography>
@@ -1163,12 +1193,12 @@ export default function Portfolio() {
                         borderRadius: 2,
                         background:
                           "linear-gradient(135deg, rgba(99,102,241,0.1), rgba(236,72,153,0.1))",
-                        border: "1px solid rgba(255, 255, 255, 0.1)",
+                        border: mode === "dark" ? "1px solid rgba(255, 255, 255, 0.1)" : "1px solid rgba(0, 0, 0, 0.1)",
                       }}
                     >
                       <Typography
                         variant="h5"
-                        sx={{ mb: 3, fontWeight: 600, color: "white" }}
+                        sx={{ mb: 3, fontWeight: 600 }}
                       >
                         Connect With Me
                       </Typography>
@@ -1216,9 +1246,11 @@ export default function Portfolio() {
                                   background:
                                     hoveredContact === index
                                       ? contact.gradient
-                                      : "rgba(30, 41, 59, 0.5)",
+                                      : mode === "dark" 
+                                        ? "rgba(30, 41, 59, 0.5)" 
+                                        : "rgba(255, 255, 255, 0.5)",
                                   backdropFilter: "blur(10px)",
-                                  border: "1px solid rgba(255, 255, 255, 0.1)",
+                                  border: mode === "dark" ? "1px solid rgba(255, 255, 255, 0.1)" : "1px solid rgba(0, 0, 0, 0.1)",
                                   transition:
                                     "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
                                   "&:hover": {
@@ -1362,8 +1394,8 @@ export default function Portfolio() {
         sx={{
           py: { xs: 2, md: 3 },
           textAlign: "center",
-          borderTop: "1px solid rgba(255, 255, 255, 0.1)",
-          background: "#1e293b",
+          borderTop: mode === "dark" ? "1px solid rgba(255, 255, 255, 0.1)" : "1px solid rgba(0, 0, 0, 0.1)",
+          background: mode === "dark" ? "#1e293b" : "#ffffff",
           px: 2,
         }}
       >
