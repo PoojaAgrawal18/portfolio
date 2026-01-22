@@ -39,6 +39,7 @@ import githubImg from "./assets/contribution.png";
 import githubImg1 from "./assets/contribution1.png";
 import linkedinImg from "./assets/linkdin.png";
 import SkillsSection from "./skill";
+import ProfilePic from "./assets/pic.jpeg";
 
 const theme = createTheme({
   palette: {
@@ -230,7 +231,7 @@ function DynamicProjectCard({ project, index, visible, projectsVisible }) {
             y: blob.y + blob.speedY,
             speedX: blob.x <= 0 || blob.x >= 100 ? -blob.speedX : blob.speedX,
             speedY: blob.y <= 0 || blob.y >= 100 ? -blob.speedY : blob.speedY,
-          }))
+          })),
         );
         animationFrameRef.current = requestAnimationFrame(animate);
       };
@@ -274,8 +275,8 @@ function DynamicProjectCard({ project, index, visible, projectsVisible }) {
         ...layout,
         perspective: "1500px",
         opacity: projectsVisible ? 1 : 0,
-        transform: projectsVisible 
-          ? "translateX(0) translateY(0) rotateX(0deg)" 
+        transform: projectsVisible
+          ? "translateX(0) translateY(0) rotateX(0deg)"
           : "translateX(-100px) translateY(60px) rotateX(-15deg)",
         transition: `all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) ${index * 0.15}s`,
       }}
@@ -633,8 +634,8 @@ export default function Portfolio() {
       },
       {
         threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
-      }
+        rootMargin: "0px 0px -100px 0px",
+      },
     );
 
     if (projectsRef.current) {
@@ -740,7 +741,7 @@ export default function Portfolio() {
             <Box
               sx={{
                 flex: { xs: "1", md: "0 0 58.333333%" },
-                mt: { xs: 0, md: -12 },
+                mt: { xs: 0, md: 10 },
               }}
             >
               <Fade in={visible} timeout={1000}>
@@ -814,8 +815,8 @@ export default function Portfolio() {
             <Box
               sx={{
                 flex: { xs: "1", md: "0 0 41.666667%" },
-                mt: { xs: 0, md: -17 },
-                ml:-8
+                mt: { xs: 0, md: 10 },
+                ml: -8,
               }}
             >
               <Zoom in={visible} timeout={1200}>
@@ -826,11 +827,11 @@ export default function Portfolio() {
                   }}
                 >
                   <Avatar
-                    src="/profile.jpg"
+                    src={ProfilePic} 
                     alt="Pooja Agrawal"
                     sx={{
-                      width: { xs: 180, md: 260 },
-                      height: { xs: 180, md: 260 },
+                      width: { xs: 280, md: 380 },
+                      height: { xs: 280, md: 380 },
                       border: "6px solid",
                       borderColor: "primary.main",
                       boxShadow: "0 20px 50px rgba(99,102,241,0.4)",
@@ -840,8 +841,51 @@ export default function Portfolio() {
               </Zoom>
             </Box>
           </Box>
+          <Box
+            id="skills"
+            sx={{
+              py: { xs: 8, md: 12 },
+              px: { xs: 2, sm: 3, md: 6 },
+              // background: "linear-gradient(180deg, #0f172a 0%, #1e293b 100%)",
+              position: "relative",
+              overflow: "hidden",
+            }}
+          >
+            <Box
+              sx={{
+                position: "absolute",
+                inset: 0,
+              }}
+            />
+
+            <Container
+              maxWidth="xxl"
+              sx={{ position: "relative", zIndex: 1, mt: 0 }}
+            >
+              <Fade in={visible} timeout={1000}>
+                <Box textAlign="center" mb={8}>
+                  <Typography
+                    sx={{
+                      mb: 2,
+                      background: "linear-gradient(135deg, #6366f1, #ec4899)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      fontWeight: 400,
+                      fontSize: 30,
+                    }}
+                  >
+                    Tech Stack
+                  </Typography>
+                </Box>
+              </Fade>
+
+              <SkillsSection />
+            </Container>
+          </Box>
         </Container>
       </Box>
+
+      {/* Dedicated Skills Section */}
 
       {/* Masonry Grid Projects Section */}
       <Box
@@ -881,7 +925,9 @@ export default function Portfolio() {
                 WebkitTextFillColor: "transparent",
                 display: "inline-block",
                 opacity: projectsVisible ? 1 : 0,
-                transform: projectsVisible ? "translateY(0)" : "translateY(-30px)",
+                transform: projectsVisible
+                  ? "translateY(0)"
+                  : "translateY(-30px)",
                 transition: "all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)",
               }}
             >
@@ -915,10 +961,6 @@ export default function Portfolio() {
           </Box>
         </Container>
       </Box>
-
-      {/* Skills Section */}
-      <SkillsSection />
-
 
       {/* Contact Section */}
       <Box

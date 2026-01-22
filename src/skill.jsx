@@ -1,138 +1,86 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+
+// Import SVGs (make sure these files exist in ./assets/svg/)
+import ReactIcon from "./assets/svg/react.svg";
+import TypeScriptIcon from "./assets/svg/typescript-icon.svg";
+import CssIcon from "./assets/svg/css-3.svg";
+import NodeIcon from "./assets/svg/nodejs.svg";
+import MySqlIcon from "./assets/svg/mysql.svg";
+import GitIcon from "./assets/svg/github-icon.svg";
+import NestJs from "./assets/svg/nestjs.svg";
+import Html from "./assets/svg/html-5.svg";
+import Express from "./assets/svg/express.svg";
+import Redis from "./assets/svg/redis.svg";
+
 
 const skills = [
-  {
-    category: "Frontend Development",
-    items: [
-      { name: "React / Next.js", level: 95 },
-      { name: "TypeScript", level: 90 },
-      { name: "CSS / Tailwind", level: 92 },
-    ],
-  },
-  {
-    category: "Backend Development",
-    items: [
-      { name: "Node.js", level: 88 },
-      { name: "Python", level: 85 },
-      { name: "Databases", level: 87 },
-    ],
-  },
-  {
-    category: "Tools & Others",
-    items: [
-      { name: "Git / GitHub", level: 93 },
-      { name: "Docker", level: 80 },
-      { name: "UI/UX Design", level: 86 },
-    ],
-  },
+  { name: "React / Next.js", icon: ReactIcon },
+  { name: "TypeScript", icon: TypeScriptIcon },
+  { name: "CSS / Tailwind", icon: CssIcon },
+  { name: "Node.js", icon: NodeIcon },
+  { name: "MySQL", icon: MySqlIcon },
+  { name: "Git / GitHub", icon: GitIcon },
+  { name: "NestJS", icon: NestJs },
+  { name: "HTML5", icon: Html },
+  { name: "Express", icon: Express },
+  { name: "Redis", icon: Redis },
 ];
 
 export default function SkillsSection() {
-  const flatSkills = skills.flatMap((group) => group.items);
-
   return (
     <Box
-      id="skills"
       sx={{
-        py: { xs: 6, md: 10 },
-        px: { xs: 2, sm: 3, md: 4 },
-        background: "rgba(99, 102, 241, 0.02)",
+        mt: 6,
         overflow: "hidden",
+        width: "100%",
       }}
     >
-      <Container maxWidth="xxl">
-        <Typography
-          variant="h2"
-          textAlign="center"
-          sx={{
-            mb: { xs: 4, md: 6 },
-            background: "linear-gradient(135deg, #6366f1, #ec4899)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-          }}
-        >
-          Skills & Expertise
-        </Typography>
-
-        {[1, 2, 3].map((row) => (
+      <Box
+        sx={{
+          display: "flex",
+          gap: 6,
+          width: "max-content",
+          animation: "marquee 20s linear infinite",
+          "@keyframes marquee": {
+            "0%": { transform: "translateX(0%)" },
+            "100%": { transform: "translateX(-50%)" },
+          },
+        }}
+      >
+        {[...skills, ...skills].map((skill, index) => (
           <Box
-            key={row}
+            key={index}
             sx={{
               display: "flex",
-              overflow: "hidden",
-              mt: row === 1 ? 0 : 4,
+              alignItems: "center",
+              gap: 1,
+              px: 3,
+              py: 1,
+              borderRadius: 20,
+              background: "rgba(255,255,255,0.06)",
+              border: "1px solid rgba(255,255,255,0.12)",
+              backdropFilter: "blur(6px)",
+              whiteSpace: "nowrap",
             }}
           >
             <Box
+              component="img"
+              src={skill.icon}
+              alt={skill.name}
+              sx={{ width: 20, height: 20 }}
+            />
+            <Typography
+              variant="body2"
               sx={{
-                display: "flex",
-                gap: 6,
-
-                animation:
-                  row === 2
-                    ? "marqueeRight 22s linear infinite"
-                    : "marqueeLeft 20s linear infinite",
-
-                "@keyframes marqueeLeft": {
-                  "0%": { transform: "translateX(0%)" },
-                  "100%": { transform: "translateX(-50%)" },
-                },
-
-                "@keyframes marqueeRight": {
-                  "0%": { transform: "translateX(-50%)" },
-                  "100%": { transform: "translateX(0%)" },
-                },
+                fontWeight: 600,
+                color: "text.secondary",
               }}
             >
-              {[...flatSkills, ...flatSkills].map((skill, index) => (
-                <Box
-                  key={`${row}-${index}`}
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    minWidth: 100,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      width: 80,
-                      height: 80,
-                      borderRadius: "50%",
-                      background:
-                        "linear-gradient(135deg, rgba(99,102,241,0.2), rgba(236,72,153,0.2))",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      boxShadow: "0 5px 20px rgba(99,102,241,0.2)",
-                      mb: 1,
-                      transition: "transform 0.3s ease",
-                      "&:hover": {
-                        transform: "scale(1.2)",
-                      },
-                    }}
-                  >
-                    <Typography sx={{ color: "#6366f1", fontWeight: 700 }}>
-                      {skill.name[0]}
-                    </Typography>
-                  </Box>
-
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: "text.secondary",
-                      textAlign: "center",
-                      fontWeight: 500,
-                    }}
-                  >
-                    {skill.name}
-                  </Typography>
-                </Box>
-              ))}
-            </Box>
+              {skill.name}
+            </Typography>
           </Box>
         ))}
-      </Container>
+      </Box>
     </Box>
   );
 }
